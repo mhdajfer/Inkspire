@@ -1,22 +1,59 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icons } from "./Icons";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
+import { axiosInstance } from "@/Utils/axios";
+import { IUser } from "@/Types/IUser";
+import { useNavigate } from "react-router";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});
+
+type LoginFormInputs = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  async function onSubmit(event: React.FormEvent) {
-    event.preventDefault();
+
+  async function onSubmit(loginData: LoginFormInputs) {
     setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      const {
+        data,
+      }: {
+        data: { success: boolean; message: string; user: IUser; token: string };
+      } = await axiosInstance.post("/users/login", loginData);
+
+      if (data.success) {
+        toast.success("Login successful");
+        setIsUserLoggedIn(true);
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log("Error while login", error);
+      toast.warning("Something went wrong");
+    } finally {
       setIsLoading(false);
-    }, 3000);
+    }
   }
 
   return (
@@ -27,7 +64,7 @@ export default function LoginForm() {
           Enter your email and password to sign in to your account
         </p>
       </div>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
@@ -36,8 +73,13 @@ export default function LoginForm() {
               type="email"
               placeholder="m@example.com"
               disabled={isLoading}
-              required
+              {...register("email")}
             />
+            {errors.email && (
+              <span className="text-sm text-red-500 dark:text-red-400">
+                {errors.email.message}
+              </span>
+            )}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
@@ -45,8 +87,13 @@ export default function LoginForm() {
               id="password"
               type="password"
               disabled={isLoading}
-              required
+              {...register("password")}
             />
+            {errors.password && (
+              <span className="text-sm text-red-500 dark:text-red-400">
+                {errors.password.message}
+              </span>
+            )}
           </div>
           <Button className="w-full" disabled={isLoading}>
             {isLoading && (

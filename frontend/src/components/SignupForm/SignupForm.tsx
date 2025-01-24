@@ -14,12 +14,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Icons } from "./Icons";
 import { cn } from "@/lib/utils";
+import { IUser } from "@/Types/IUser";
+import { toast } from "sonner";
+import { axiosInstance } from "@/Utils/axios";
 
 interface FormData {
   fullName: string;
   email: string;
   password: string;
   confirmPassword: string;
+  phoneNo: string;
 }
 
 export default function SignUpForm() {
@@ -27,6 +31,7 @@ export default function SignUpForm() {
   const [error, setError] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
+    phoneNo: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -45,13 +50,11 @@ export default function SignUpForm() {
     event.preventDefault();
     setError("");
 
-    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    // Validate password strength
     if (formData.password.length < 8) {
       setError("Password must be at least 8 characters long");
       return;
@@ -60,12 +63,18 @@ export default function SignUpForm() {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Form submitted:", formData);
+      const {
+        data,
+      }: { data: { success: boolean; message: string; data: IUser } } =
+        await axiosInstance.post("/users", { formData });
+
+      if (data.success) {
+        toast(data.message);
+      }
     } catch (err) {
+      toast.warning("user already existing!..");
+
       console.log("Error: ", err);
-      setError("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -110,6 +119,19 @@ export default function SignUpForm() {
                 autoCorrect="off"
                 disabled={isLoading}
                 value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="phoneNo">Phone Number</Label>
+              <Input
+                id="phoneNo"
+                name="phoneNo"
+                placeholder=" phone number"
+                type="phoneNo"
+                disabled={isLoading}
+                value={formData.phoneNo}
                 onChange={handleChange}
                 required
               />
