@@ -1,5 +1,5 @@
 import { UserLayout } from "@/components/Layout/UserLayout";
-import { HomePage } from "@/pages/HomePage";
+import { LandingPage } from "@/pages/LandingPage";
 import LoggedIn from "@/pages/LoggedIn";
 import { Login } from "@/pages/Login";
 import Signup from "@/pages/SignUp";
@@ -13,10 +13,12 @@ export default function UserRouter() {
         <Route element={<UserLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
+
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<LoggedIn />} />
           </Route>
-          <Route path="/*" element={<HomePage />} />
+
+          <Route path="/*" element={<LandingPage />} />
         </Route>
       </Routes>
     </>

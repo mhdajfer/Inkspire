@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -13,6 +13,9 @@ import { toast } from "sonner";
 import { axiosInstance } from "@/Utils/axios";
 import { IUser } from "@/Types/IUser";
 import { useNavigate } from "react-router";
+import { AppDispatch, RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "@/store/reducers/authReducer";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -22,6 +25,7 @@ const loginSchema = z.object({
 type LoginFormInputs = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
@@ -32,6 +36,13 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
+  const isUserLoggedIn = useSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
+
+  useEffect(() => {
+    if (isUserLoggedIn) navigate("/home");
+  }, [isUserLoggedIn, navigate]);
 
   async function onSubmit(loginData: LoginFormInputs) {
     setIsLoading(true);
@@ -45,7 +56,7 @@ export default function LoginForm() {
 
       if (data.success) {
         toast.success("Login successful");
-        setIsUserLoggedIn(true);
+        dispatch(userLogin({ user: data.user, token: data.token }));
         navigate("/home");
       }
     } catch (error) {

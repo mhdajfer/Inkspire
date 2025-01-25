@@ -7,8 +7,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true, // Enables importing CommonJS modules without needing default typing
+    "strict": true, // Ensures strict type checking for better reliability
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "moduleResolution": "node", // Ensures modules are resolved like Node.js
+    "resolveJsonModule": true, // Enables importing JSON files
+    "skipLibCheck": true // Skips type checking of declaration files to avoid third-party issues
   }
 }

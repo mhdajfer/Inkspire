@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useNavigate } from "react-router";
-import { useAuth } from "@/context/authContext";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { userLogout } from "@/store/reducers/authReducer";
 
 interface NavItem {
   title: string;
@@ -33,9 +35,10 @@ const navItems: NavItem[] = [
 
 export function Navbar() {
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { isUserLoggedIn, setIsUserLoggedIn } = useAuth();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -89,12 +92,12 @@ export function Navbar() {
         </Sheet>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none"></div>
-          {isUserLoggedIn ? (
+          {isLoggedIn ? (
             <nav>
               <Button
                 variant="outline"
                 className="hidden md:flex *:"
-                onClick={() => setIsUserLoggedIn(false)}
+                onClick={() => dispatch(userLogout())}
               >
                 Logout
               </Button>

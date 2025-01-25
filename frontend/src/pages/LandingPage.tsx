@@ -10,7 +10,7 @@ import { Badge } from "../components/ui/badge";
 import { blogs as posts } from "@/Utils/Consts";
 import { useNavigate } from "react-router";
 
-export function HomePage() {
+export function LandingPage() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background">
