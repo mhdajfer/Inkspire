@@ -1,6 +1,6 @@
 import { UserLayout } from "@/components/Layout/UserLayout";
 import { LandingPage } from "@/pages/LandingPage";
-import LoggedIn from "@/pages/LoggedIn";
+import LoggedIn from "@/pages/HomePage";
 import { Login } from "@/pages/Login";
 import Signup from "@/pages/SignUp";
 import PrivateRoutes from "@/Utils/privateRoutes";
@@ -16,6 +16,7 @@ export default function UserRouter() {
 
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<LoggedIn />} />
+
           </Route>
 
           <Route path="/*" element={<LandingPage />} />

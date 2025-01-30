@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { IPost } from "../../shared/types/IPost";
+import { IBlog } from "../../shared/types/IBlog";
 
-const PostSchema: Schema<IPost> = new Schema(
+const BlogSchema: Schema<IBlog> = new Schema(
   {
     title: { type: String, required: true, trim: true },
     content: { type: String, required: true },
@@ -15,3 +15,5 @@ const PostSchema: Schema<IPost> = new Schema(
   },
   { timestamps: true }
 );
+
+export default mongoose.model<IBlog>("Blog", BlogSchema);

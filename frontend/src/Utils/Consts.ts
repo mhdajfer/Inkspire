@@ -1,40 +1,70 @@
-import { BlogPost } from "@/Types/blog";
+import { IBlog } from "@/Types/IBlog";
 
-export const blogs: BlogPost[] = [
+export const blogs: IBlog[] = [
   {
-    id: 1,
-    title: "Understanding Modern Web Development",
-    excerpt:
-      "An in-depth look at the latest trends and technologies shaping the future of web development, including server components, edge computing, and more.",
-    date: "January 21, 2024",
-    author: "Sarah Johnson",
-    category: "Technology",
-    imageUrl:
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop",
-    readTime: "5 min read",
+    _id: "1",
+    title: "The Power of Positive Thinking",
+    content:
+      "Discover how cultivating a positive mindset can transform your life.",
+    author: "John Doe",
+    tags: ["mindfulness", "motivation", "happiness"],
+    coverImage: "https://renderform.io/blog/post-cover-blue.png",
+    createdAt: "2024-07-05T10:30:00Z",
+    updatedAt: "2024-07-05T10:30:00Z",
   },
   {
-    id: 2,
-    title: "The Art of Technical Writing",
-    excerpt:
-      "Discover the key principles and best practices for creating clear, concise, and effective technical documentation that resonates with your audience.",
-    date: "January 20, 2024",
-    author: "Michael Chen",
-    category: "Writing",
-    imageUrl:
-      "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&h=400&fit=crop",
-    readTime: "4 min read",
+    _id: "2",
+    title: "Unlocking Your Creative Potential",
+    content:
+      "Explore techniques to ignite your creativity and unleash your inner artist.",
+    author: "Jane Smith",
+    tags: ["creativity", "art", "inspiration"],
+    coverImage: "https://renderform.io/blog/post-cover-blue.png",
+    createdAt: "2024-07-10T15:15:00Z",
+    updatedAt: "2024-07-10T15:15:00Z",
   },
   {
-    id: 3,
-    title: "Building Scalable Applications",
-    excerpt:
-      "Learn the architectural patterns and practices that help you create applications that can grow with your user base while maintaining performance.",
-    date: "January 19, 2024",
-    author: "Alex Rivera",
-    category: "Architecture",
-    imageUrl:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop",
-    readTime: "7 min read",
+    _id: "3",
+    title: "The Importance of Mindfulness in Daily Life",
+    content:
+      "Learn how to bring mindfulness into your everyday routines for greater peace and well-being.",
+    author: "David Lee",
+    tags: ["mindfulness", "meditation", "stress management"],
+    coverImage: "https://renderform.io/blog/post-cover-blue.png",
+    createdAt: "2024-07-15T09:00:00Z",
+    updatedAt: "2024-07-15T09:00:00Z",
+  },
+  {
+    _id: "4",
+    title: "Healthy Habits for a Better You",
+    content:
+      "Discover simple yet effective healthy habits to improve your physical and mental health.",
+    author: "Sarah Jones",
+    tags: ["health", "fitness", "nutrition"],
+    coverImage: "https://renderform.io/blog/post-cover-blue.png",
+    createdAt: "2024-07-20T12:30:00Z",
+    updatedAt: "2024-07-20T12:30:00Z",
+  },
+  {
+    _id: "5",
+    title: "The Art of Storytelling",
+    content:
+      "Explore the power of storytelling and how to craft compelling narratives.",
+    author: "Michael Brown",
+    tags: ["storytelling", "writing", "communication"],
+    coverImage: "https://renderform.io/blog/post-cover-blue.png",
+    createdAt: "2024-07-25T16:00:00Z",
+    updatedAt: "2024-07-25T16:00:00Z",
+  },
+  {
+    _id: "6",
+    title: "Travel the World: A Guide to Budget Travel",
+    content:
+      "Tips and tricks for exploring the world without breaking the bank.",
+    author: "Emily Davis",
+    tags: ["travel", "budgeting", "adventure"],
+    coverImage: "https://renderform.io/blog/post-cover-blue.png",
+    createdAt: "2024-07-30T11:00:00Z",
+    updatedAt: "2024-07-30T11:00:00Z",
   },
 ];

@@ -1,4 +1,4 @@
-import { BlogPost } from "./blog";
+import { BlogPost } from "./IBlog";
 
 export interface IUser {
   _id?: string;
