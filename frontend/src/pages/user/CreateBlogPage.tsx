@@ -2,9 +2,11 @@ import { CreateBlogForm } from "@/components/CreateBlogForm";
 import { IBlog } from "@/Types/IBlog";
 import { axiosInstance } from "@/Utils/axios";
 import { getUploadUrl, uploadFileToS3 } from "@/Utils/s3Service";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 export default function CreateBlogPage() {
+  const navigate = useNavigate();
   const handleCreateBlog = async (
     blogData: Omit<IBlog, "_id" | "createdAt" | "updatedAt">
   ) => {
@@ -28,6 +30,7 @@ export default function CreateBlogPage() {
 
       if (response.success) {
         await uploadFileToS3(response.uploadUrl, coverFile as File);
+        navigate("/home");
         toast.success("blog uploaded successfully");
       }
     } catch (error) {

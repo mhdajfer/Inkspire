@@ -14,13 +14,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IBlog } from "@/Types/IBlog";
+import { S3URL } from "@/Utils/Consts";
+import { useNavigate } from "react-router";
 
 interface PostCardProps {
   post: IBlog;
+  ownAccount?: boolean;
   onClick: (id: string) => void;
 }
 
-export function BlogCard({ post, onClick }: PostCardProps) {
+export function BlogCard({ post, onClick, ownAccount = false }: PostCardProps) {
+  const navigate = useNavigate();
   // Get the first 150 characters of content
   const excerpt =
     post.content.length > 150
@@ -40,25 +44,31 @@ export function BlogCard({ post, onClick }: PostCardProps) {
             </a>
           </h3>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreVertical className="h-4 w-4" />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>
-              <Pencil className="mr-2 h-4 w-4" /> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Share2 className="mr-2 h-4 w-4" /> Share
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
-              <Trash2 className="mr-2 h-4 w-4" /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {ownAccount && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <MoreVertical className="h-4 w-4" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => {
+                  navigate("/blog/edit", { state: post });
+                }}
+              >
+                <Pencil className="mr-2 h-4 w-4" /> Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Share2 className="mr-2 h-4 w-4" /> Share
+              </DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600">
+                <Trash2 className="mr-2 h-4 w-4" /> Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </CardHeader>
       <CardContent
         className="flex-1 cursor-pointer"
@@ -66,10 +76,10 @@ export function BlogCard({ post, onClick }: PostCardProps) {
           onClick(post._id);
         }}
       >
-        {post.coverImage && (
+        {post._id && (
           <div className="aspect-video relative mb-4">
             <img
-              src={post.coverImage || "/placeholder.svg"}
+              src={`${S3URL}/Image-${post._id}.jpg`}
               alt={post.title}
               className="rounded-md object-cover w-full h-full"
             />

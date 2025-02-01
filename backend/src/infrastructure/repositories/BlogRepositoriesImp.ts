@@ -23,4 +23,40 @@ export class BlogRepositoryImp implements BlogRepository {
       throw error;
     }
   }
+
+  async getAllBlogs(): Promise<IBlog[]> {
+    try {
+      const blogs = await Blog.find();
+
+      return blogs as IBlog[];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getMyBlogs(userId: string): Promise<IBlog[]> {
+    try {
+      const blogs = await Blog.find({ author: userId });
+
+      return blogs;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async editBlog(blogData: Partial<IBlog>): Promise<IBlog> {
+    try {
+      const { _id, ...blog } = blogData;
+
+      const updatedBlog = await Blog.findOneAndUpdate(
+        { _id },
+        { $set: blog },
+        { new: true }
+      );
+
+      return updatedBlog as IBlog;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

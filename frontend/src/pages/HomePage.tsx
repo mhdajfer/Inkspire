@@ -1,12 +1,35 @@
 import { BlogCard } from "@/components/BlogCard";
 import { Button } from "@/components/ui/button";
-import { blogs } from "@/Utils/Consts";
+import { IBlog } from "@/Types/IBlog";
+import { axiosInstance } from "@/Utils/axios";
 import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 export default function LoggedIn() {
   const navigate = useNavigate();
+
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const {
+          data,
+        }: { data: { success: boolean; message: string; data: IBlog[] } } =
+          await axiosInstance.get("/blogs");
+
+        if (data.success) {
+          setBlogs(data.data);
+        } else toast.error(data.message);
+      } catch (error) {
+        console.log("error while getting data", error);
+      }
+    }
+
+    getData();
+  }, []);
   return (
     <>
       <main className="">
@@ -32,7 +55,10 @@ export default function LoggedIn() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {blogs.map((post) => (
                 <div className="" key={post._id}>
-                  <BlogCard onClick={() => toast.info("delete")} post={post} />
+                  <BlogCard
+                    onClick={(id) => navigate(`/blog/${id}`)}
+                    post={post}
+                  />
                 </div>
               ))}
             </div>

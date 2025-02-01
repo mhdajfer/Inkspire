@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { IBlog } from "@/Types/IBlog";
+import { S3URL } from "@/Utils/Consts";
 
 interface BlogDetailProps {
   blog: IBlog;
@@ -60,11 +61,11 @@ export function SingleBlog({ blog }: BlogDetailProps) {
       </header>
 
       {/* Cover Image */}
-      {blog.coverImage && (
+      {blog._id && (
         <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
           <img
-            src={blog.coverImage || "/placeholder.svg"}
-            alt={blog.title}
+            src={`${S3URL}/Image-${blog._id}.jpg`}
+            alt={"blog.title"}
             className="object-cover w-full h-full"
           />
         </div>

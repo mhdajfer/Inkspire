@@ -57,6 +57,7 @@ export default function LoginForm() {
       if (data.success) {
         toast.success("Login successful");
         dispatch(userLogin({ user: data.user, token: data.token }));
+        
         navigate("/home");
       }
     } catch (error) {

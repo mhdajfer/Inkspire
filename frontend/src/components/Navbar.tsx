@@ -4,10 +4,19 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import { EllipsisVertical } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { userLogout } from "@/store/reducers/authReducer";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -60,7 +69,7 @@ export function Navbar() {
         </Sheet>
         <div className="items-center justify-between space-x-2 hidden md:flex">
           {isLoggedIn ? (
-            <nav>
+            <nav className="flex space-x-5">
               <Button
                 variant="outline"
                 className="hidden md:flex *:"
@@ -68,6 +77,19 @@ export function Navbar() {
               >
                 Logout
               </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <EllipsisVertical />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/blog/my-posts")}>
+                    My Posts
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </nav>
           ) : (
             <nav className="flex items-center space-x-2">

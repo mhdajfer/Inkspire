@@ -68,3 +68,5 @@ export const blogs: IBlog[] = [
     updatedAt: "2024-07-30T11:00:00Z",
   },
 ];
+
+export const S3URL = "https://inkspirecloud.s3.eu-north-1.amazonaws.com";

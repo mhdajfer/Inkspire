@@ -1,5 +1,6 @@
 import { IUser } from "@/Types/IUser";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 interface authState {
   user: IUser | null;
@@ -22,6 +23,7 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.isLoggedIn = true;
       localStorage.setItem("token", action.payload.token);
+      Cookies.set("token", action.payload.token);
     },
     userLogout: (state) => {
       state.isLoggedIn = false;
