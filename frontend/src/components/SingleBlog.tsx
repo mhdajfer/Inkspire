@@ -51,11 +51,15 @@ export function SingleBlog({ blog }: BlogDetailProps) {
         <div className="flex items-center justify-center gap-x-2">
           <img
             src={`https://i.pravatar.cc/150?u=${blog.author}`}
-            alt={blog.author}
+            alt={"profile picture"}
             className="h-10 w-10 rounded-full"
           />
           <div className="text-sm">
-            <p className="font-medium">{blog.author}</p>
+            <p className="font-medium">
+              {typeof blog.author == "object"
+                ? blog.author.fullName
+                : blog.author}
+            </p>
           </div>
         </div>
       </header>

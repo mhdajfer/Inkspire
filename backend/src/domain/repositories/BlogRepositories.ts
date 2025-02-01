@@ -6,4 +6,5 @@ export interface BlogRepository {
   getAllBlogs(): Promise<IBlog[]>;
   getMyBlogs(userId: string): Promise<IBlog[]>;
   editBlog(blogData: Partial<IBlog>): Promise<IBlog>;
+  deleteBlog(blogId: string): Promise<void>;
 }

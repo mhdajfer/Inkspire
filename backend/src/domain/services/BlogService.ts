@@ -6,4 +6,5 @@ export interface BlogService {
   getOneBlog(blogId: string): Promise<IBlog>;
   getMyBlogs(userId: string): Promise<IBlog[]>
   editBlog(blogData: Partial<IBlog>): Promise<IBlog>
+  deleteBlog(blogId: string): Promise<void>;
 }

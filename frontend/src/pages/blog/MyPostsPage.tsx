@@ -35,6 +35,7 @@ const MyPostsPage = () => {
             onClick={(id) => navigate(`/blog/${id}`)}
             post={post}
             ownAccount={true}
+            setBlogs={setBlogs}
           />
         </div>
       ))}

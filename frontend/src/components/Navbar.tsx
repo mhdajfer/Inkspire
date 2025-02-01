@@ -33,7 +33,7 @@ export function Navbar() {
             className="mr-6 flex items-center space-x-2 cursor-pointer"
             onClick={() => navigate("/")}
           >
-            <span className=" font-bold">ACME Inc</span>
+            <span className=" font-bold">Inkspire</span>
           </a>
         </div>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -48,7 +48,7 @@ export function Navbar() {
           </SheetTrigger>
           <SheetContent side="left" className="pr-0">
             <a className="flex items-center" href="/">
-              <span className="font-bold">ACME Inc</span>
+              <span className="font-bold">Inkspire</span>
             </a>
             <nav className="mt-8 flex flex-col space-y-3">
               <a
@@ -84,7 +84,9 @@ export function Navbar() {
                 <DropdownMenuContent>
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    Profile
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate("/blog/my-posts")}>
                     My Posts
                   </DropdownMenuItem>

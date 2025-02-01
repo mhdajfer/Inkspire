@@ -1,10 +1,11 @@
 import { UserLayout } from "@/components/Layout/UserLayout";
 import { LandingPage } from "@/pages/LandingPage";
-import LoggedIn from "@/pages/HomePage";
+import HomePage from "@/pages/HomePage";
 import { Login } from "@/pages/Login";
 import Signup from "@/pages/SignUp";
 import PrivateRoutes from "@/Utils/privateRoutes";
 import { Route, Routes } from "react-router";
+import ProfilePage from "@/pages/user/ProfilePage";
 
 export default function UserRouter() {
   return (
@@ -15,8 +16,8 @@ export default function UserRouter() {
           <Route path="/register" element={<Signup />} />
 
           <Route element={<PrivateRoutes />}>
-            <Route path="/home" element={<LoggedIn />} />
-
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
 
           <Route path="/*" element={<LandingPage />} />

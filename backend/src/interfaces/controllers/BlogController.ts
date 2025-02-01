@@ -101,20 +101,35 @@ export class BlogController {
 
   async editBlog(req: CustomRequest, res: Response, next: NextFunction) {
     try {
-      
       const { blogData } = req.body;
 
       const updatedBlog = await this._blogService.editBlog(blogData);
 
-      res
-        .status(StatusCode.OK)
-        .json({
-          success: true,
-          message: "updated blog successfully",
-          data: updatedBlog,
-        });
+      res.status(StatusCode.OK).json({
+        success: true,
+        message: "updated blog successfully",
+        data: updatedBlog,
+      });
     } catch (error) {
       console.log("error while editing blog", error);
+      next(error);
+    }
+  }
+
+  async deleteBlog(req: CustomRequest, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      console.log(`deleting ${id}`);
+      await this._blogService.deleteBlog(id);
+
+      res.status(StatusCode.OK).json({
+        success: true,
+        message: "deleted blog successfully",
+        data: null,
+      });
+    } catch (error) {
+      console.log("error while deleting blog", error);
       next(error);
     }
   }

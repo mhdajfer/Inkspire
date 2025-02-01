@@ -16,20 +16,46 @@ import {
 import { IBlog } from "@/Types/IBlog";
 import { S3URL } from "@/Utils/Consts";
 import { useNavigate } from "react-router";
+import { axiosInstance } from "@/Utils/axios";
+import { toast } from "sonner";
 
 interface PostCardProps {
   post: IBlog;
   ownAccount?: boolean;
   onClick: (id: string) => void;
+  setBlogs: React.Dispatch<React.SetStateAction<IBlog[]>>;
 }
 
-export function BlogCard({ post, onClick, ownAccount = false }: PostCardProps) {
+export function BlogCard({
+  post,
+  onClick,
+  ownAccount = false,
+  setBlogs,
+}: PostCardProps) {
   const navigate = useNavigate();
   // Get the first 150 characters of content
   const excerpt =
     post.content.length > 150
       ? `${post.content.slice(0, 150)}...`
       : post.content;
+
+  async function handleDelete(id: string) {
+    try {
+      const {
+        data,
+      }: { data: { success: boolean; message: string; data: null } } =
+        await axiosInstance.delete(`/blogs/${id}`);
+
+      if (data.success) {
+        setBlogs((prevBlogs: IBlog[]) =>
+          prevBlogs.filter((blog) => blog._id !== id)
+        );
+        toast.success(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Card className="h-full flex flex-col">
@@ -63,7 +89,10 @@ export function BlogCard({ post, onClick, ownAccount = false }: PostCardProps) {
               <DropdownMenuItem>
                 <Share2 className="mr-2 h-4 w-4" /> Share
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-red-600">
+              <DropdownMenuItem
+                className="text-red-600"
+                onClick={() => handleDelete(post._id)}
+              >
                 <Trash2 className="mr-2 h-4 w-4" /> Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -92,10 +121,14 @@ export function BlogCard({ post, onClick, ownAccount = false }: PostCardProps) {
           <div className="flex items-center space-x-2">
             <img
               src={`https://i.pravatar.cc/150?u=${post.author}`}
-              alt={post.author}
+              alt={"profile picture"}
               className="rounded-full h-8 w-8"
             />
-            <span className="text-sm font-medium">{post.author}</span>
+            <span className="text-sm font-medium">
+              {typeof post.author == "object"
+                ? post.author.fullName
+                : post.author}
+            </span>
           </div>
           <div className="text-sm text-muted-foreground">
             {new Date(post.createdAt).toLocaleDateString("en-US", {

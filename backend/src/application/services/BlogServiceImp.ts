@@ -45,4 +45,12 @@ export class BlogServiceImp implements BlogService {
       throw error;
     }
   }
+
+  async deleteBlog(blogId: string): Promise<void> {
+    try {
+      await this._blogRepository.deleteBlog(blogId);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

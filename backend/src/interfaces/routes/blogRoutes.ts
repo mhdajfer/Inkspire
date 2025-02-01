@@ -16,6 +16,7 @@ router.get(
   userAuth,
   blogController.getAllBlogs.bind(blogController)
 );
+router.delete("/:id", blogController.deleteBlog.bind(blogController));
 router.get("/:id", blogController.getOneBlog.bind(blogController));
 router.put("/:id", blogController.editBlog.bind(blogController));
 router.post("/", blogController.createBlog.bind(blogController));
