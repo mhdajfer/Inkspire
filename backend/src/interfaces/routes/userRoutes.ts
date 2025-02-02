@@ -13,6 +13,8 @@ router.get("/", (req, res) => {
   res.send("Hello from userRoutes!");
 });
 
+router.put("/", userController.editUser.bind(userController));
+
 router.post("/", userController.createUser.bind(userController));
 router.post("/login", userController.login.bind(userController));
 

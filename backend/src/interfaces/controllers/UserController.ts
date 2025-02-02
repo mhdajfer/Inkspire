@@ -46,4 +46,22 @@ export class UserController {
       next(error);
     }
   }
+
+  async editUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userData } = req.body;
+
+      const updatedUser = await this._userService.editUser(userData);
+
+      res
+        .status(StatusCode.OK)
+        .json({
+          success: true,
+          message: "user updated successfully",
+          data: updatedUser,
+        });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

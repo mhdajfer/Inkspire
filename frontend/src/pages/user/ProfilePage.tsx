@@ -1,12 +1,37 @@
 import { ProfileView } from "@/components/ProfileView";
+import { userUpdate } from "@/store/reducers/authReducer";
 import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { IUser } from "@/Types/IUser";
+import { axiosInstance } from "@/Utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 export default function ProfilePage() {
+  const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.auth.user);
-  const handleEditProfile = () => {
-    // Handle profile update
-    console.log("Profile updated");
+  const handleEditProfile = async (userData: Partial<IUser>) => {
+    if (
+      userData.fullName == currentUser?.fullName &&
+      userData.email == currentUser?.email &&
+      userData.phoneNo == currentUser?.phoneNo &&
+      userData.phoneNo
+    ) {
+      return toast.info("No change detected");
+    }
+    console.log(userData);
+    try {
+      const {
+        data,
+      }: { data: { success: true; message: string; data: IUser } } =
+        await axiosInstance.put("/users", { userData });
+
+      if (data.success) {
+        dispatch(userUpdate({ user: data.data }));
+        toast.success(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleImageUpload = async (file: File) => {

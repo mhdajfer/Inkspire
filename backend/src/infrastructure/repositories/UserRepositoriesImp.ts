@@ -23,4 +23,18 @@ export class UserRepositoriesImp implements UserRepository {
       throw error;
     }
   }
+
+  async editUser(userData: Partial<IUser>): Promise<IUser> {
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: userData._id },
+        { $set: userData },
+        { new: true }
+      );
+
+      return updatedUser as IUser;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

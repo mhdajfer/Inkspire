@@ -6,4 +6,5 @@ export interface UserService {
     email: string,
     password: string
   ): Promise<{ token: string; user: IUser }>;
+  editUser(userData: Partial<IUser>): Promise<IUser>;
 }

@@ -56,5 +56,11 @@ export class UserServiceImp implements UserService {
     }
   }
 
-  
+  async editUser(userData: Partial<IUser>): Promise<IUser> {
+    try {
+      return await this._userRepository.editUser(userData);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

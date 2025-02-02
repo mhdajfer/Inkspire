@@ -1,12 +1,35 @@
 import { Button } from "../components/ui/button";
-import { blogs } from "@/Utils/Consts";
 import { useNavigate } from "react-router";
 import { BlogCard } from "@/components/BlogCard";
 import { toast } from "sonner";
+import { IBlog } from "@/Types/IBlog";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "@/Utils/axios";
 
 export function LandingPage() {
-  const posts = blogs.slice(0, 5);
   const navigate = useNavigate();
+
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const {
+          data,
+        }: { data: { success: boolean; message: string; data: IBlog[] } } =
+          await axiosInstance.get("/blogs");
+
+        if (data.success) {
+          setBlogs(data.data);
+        } else toast.error(data.message);
+      } catch (error) {
+        console.log("error while getting data", error);
+      }
+    }
+
+    getData();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -35,11 +58,12 @@ export function LandingPage() {
             Latest Posts
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
+            {blogs.map((post) => (
               <div className="" key={post._id}>
                 <BlogCard
                   onClick={(id: string) => toast.info(id)}
                   post={post}
+                  setBlogs={setBlogs}
                 />
               </div>
             ))}

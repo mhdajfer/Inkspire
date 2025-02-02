@@ -21,7 +21,7 @@ import { toast } from "sonner";
 
 interface ProfileViewProps {
   user: IUser;
-  onEditClick?: () => void;
+  onEditClick: (userData: Partial<IUser>) => void;
   onImageUpload?: (file: File) => void;
 }
 
@@ -46,8 +46,7 @@ export function ProfileView({
 
   const handleEdit = () => {
     if (isEditing) {
-      // Save changes
-      onEditClick?.();
+      onEditClick(editedUser);
     }
     setIsEditing(!isEditing);
   };
