@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JsonWebTokenError, TokenExpiredError } from "jsonwebtoken";
 import { StatusCode } from "../../shared/types/StatusCode";
 import { CustomError } from "../../shared/errors/CustomError";
-// import dotenv from "dotenv";
 
-// dotenv.config();
 export default function userAuth(
   req: Request & Partial<{ user: string | jwt.JwtPayload }>,
   res: Response,
@@ -29,6 +27,8 @@ export default function userAuth(
       throw new CustomError("secret key not provided", StatusCode.NOT_FOUND);
 
     const user = jwt.verify(token, process.env.SECRET_KEY);
+
+    console.log("user auth", user);
 
     if (!user) throw new CustomError("user not found", StatusCode.UNAUTHORIZED);
 

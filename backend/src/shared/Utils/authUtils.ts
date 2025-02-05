@@ -4,7 +4,11 @@ import { StatusCode } from "../types/StatusCode";
 import { IUser } from "../types/IUser";
 
 export class AuthUtils {
-  static generateToken(payload: { id: string; email: string }): string {
+  static generateToken(payload: {
+    _id: string;
+    fullName: string;
+    email: string;
+  }): string {
     const secret = process.env.SECRET_KEY;
     const expiresIn = process.env.JWT_EXPIRATION;
 

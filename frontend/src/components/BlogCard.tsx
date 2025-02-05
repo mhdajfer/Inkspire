@@ -120,7 +120,11 @@ export function BlogCard({
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-2">
             <img
-              src={`https://i.pravatar.cc/150?u=${post.author}`}
+              src={
+                typeof post.author == "object"
+                  ? `${S3URL}/Image-${post.author._id}.jpg`
+                  : `https://i.pravatar.cc/150?u=${post.author}`
+              }
               alt={"profile picture"}
               className="rounded-full h-8 w-8"
             />

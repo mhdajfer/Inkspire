@@ -110,13 +110,6 @@ export function EditBlogForm({
     }
   };
 
-  const handleRemoveImage = () => {
-    form.setValue("coverImage", undefined);
-    setImagePreview(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
 
   const handleSubmitForm = (data: Partial<IBlog>) => {
     onSubmit({

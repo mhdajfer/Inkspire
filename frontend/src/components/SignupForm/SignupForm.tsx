@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { IUser } from "@/Types/IUser";
 import { toast } from "sonner";
 import { axiosInstance } from "@/Utils/axios";
+import { useNavigate } from "react-router";
 
 interface FormData {
   fullName: string;
@@ -27,6 +28,7 @@ interface FormData {
 }
 
 export default function SignUpForm() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
@@ -70,6 +72,7 @@ export default function SignUpForm() {
 
       if (data.success) {
         toast(data.message);
+        navigate("/login");
       }
     } catch (err) {
       toast.warning("user already existing!..");

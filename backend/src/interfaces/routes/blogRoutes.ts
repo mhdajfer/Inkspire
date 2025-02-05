@@ -14,7 +14,7 @@ router.get("/", blogController.getAllBlogs.bind(blogController));
 router.get(
   "/myblogs",
   userAuth,
-  blogController.getAllBlogs.bind(blogController)
+  blogController.getMyBlogs.bind(blogController)
 );
 router.delete("/:id", blogController.deleteBlog.bind(blogController));
 router.get("/:id", blogController.getOneBlog.bind(blogController));

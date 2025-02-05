@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:4000/api",
+  baseURL: "https://inkspire.mhdajfer.in/api",
   withCredentials: true,
 });
 

@@ -31,7 +31,10 @@ export class BlogRepositoryImp implements BlogRepository {
 
   async getAllBlogs(): Promise<IBlog[]> {
     try {
-      const blogs = await Blog.find();
+      const blogs = await Blog.find().sort({ createdAt: -1 }).populate({
+        path: "author",
+        select: "fullName email",
+      });
 
       return blogs as IBlog[];
     } catch (error) {
@@ -41,10 +44,12 @@ export class BlogRepositoryImp implements BlogRepository {
 
   async getMyBlogs(userId: string): Promise<IBlog[]> {
     try {
-      const blogs = await Blog.find({ author: userId }).populate({
-        path: "author", // Field to populate
-        select: "fullName email", // Fields to include from the referenced collection
-      });
+      const blogs = await Blog.find({ author: userId })
+        .sort({ createdAt: -1 })
+        .populate({
+          path: "author",
+          select: "fullName email",
+        });
 
       return blogs;
     } catch (error) {

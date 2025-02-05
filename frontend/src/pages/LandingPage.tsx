@@ -20,7 +20,7 @@ export function LandingPage() {
           await axiosInstance.get("/blogs");
 
         if (data.success) {
-          setBlogs(data.data);
+          setBlogs(data.data.splice(0, 6));
         } else toast.error(data.message);
       } catch (error) {
         console.log("error while getting data", error);
@@ -61,7 +61,7 @@ export function LandingPage() {
             {blogs.map((post) => (
               <div className="" key={post._id}>
                 <BlogCard
-                  onClick={(id: string) => toast.info(id)}
+                  onClick={(id) => navigate(`/blog/${id}`)}
                   post={post}
                   setBlogs={setBlogs}
                 />
