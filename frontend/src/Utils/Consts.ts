@@ -69,4 +69,4 @@ export const blogs: IBlog[] = [
   },
 ];
 
-export const S3URL = import.meta.env.S3_URL;
+export const S3URL = "https://inkspirecloud.s3.eu-north-1.amazonaws.com";
